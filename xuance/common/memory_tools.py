@@ -619,3 +619,4 @@ class DummyOffPolicyBuffer_Atari(DummyOffPolicyBuffer):
         self.auxiliary_infos = create_memory(self.auxiliary_shape, self.n_envs, self.n_size)
         self.rewards = create_memory((), self.n_envs, self.n_size)
         self.terminals = create_memory((), self.n_envs, self.n_size)
+

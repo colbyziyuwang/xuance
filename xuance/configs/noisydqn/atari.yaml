@@ -49,3 +49,4 @@ eval_interval: 500000
 test_episode: 1
 log_dir: "./logs/noisy_dqn/"
 model_dir: "./models/noisy_dqn/"
+

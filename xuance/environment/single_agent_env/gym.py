@@ -234,3 +234,4 @@ class LazyFrames(object):
 
     def __getitem__(self, i):
         return self._force()[..., i]
+

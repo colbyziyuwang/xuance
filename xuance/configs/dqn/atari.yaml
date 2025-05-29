@@ -49,3 +49,4 @@ eval_interval: 500000
 test_episode: 5
 log_dir: "./logs/dqn/"
 model_dir: "./models/dqn/"
+
