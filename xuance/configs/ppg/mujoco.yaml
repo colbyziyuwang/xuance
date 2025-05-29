@@ -1,6 +1,6 @@
 agent: "PPG"
 env_name: "MuJoCo"
-env_id: "InvertedPendulum-v2"
+env_id: "Ant-v4"
 env_seed: 1
 vectorize: "DummyVecEnv"
 representation: "Basic_MLP"

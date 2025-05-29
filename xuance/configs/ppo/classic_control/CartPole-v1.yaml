@@ -1,11 +1,11 @@
-agent: "PPO_Clip"  # Choice: PPO_Clip, PPO_KL
+agent: "PPO_KL"  # Choice: PPO_Clip, PPO_KL
 env_name: "Classic Control"
 env_id: "CartPole-v1"
 env_seed: 1
 vectorize: "DummyVecEnv"
 representation: "Basic_MLP"
 policy: "Categorical_AC"
-learner: "PPOCLIP_Learner"  # Choice: PPOCLIP_Learner, PPOKL_Learner
+learner: "PPOKL_Learner"  # Choice: PPOCLIP_Learner, PPOKL_Learner
 runner: "DRL"
 
 representation_hidden_size: [128,]

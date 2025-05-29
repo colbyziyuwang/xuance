@@ -426,7 +426,7 @@ class RecurrentOffPolicyBuffer(Buffer):
     def sample(self):
         obs_batch, act_batch, rew_batch, terminal_batch = [], [], [], []
         episode_choices = np.random.choice(self.memory, self.batch_size)
-        length_min = self.episode_length
+        length_min = float("inf")
         for episode in episode_choices:
             length_min = min(length_min, len(episode))
 

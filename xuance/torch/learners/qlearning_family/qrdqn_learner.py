@@ -14,7 +14,7 @@ class QRDQN_Learner(Learner):
                  config: Namespace,
                  policy: nn.Module):
         super(QRDQN_Learner, self).__init__(config, policy)
-        self.optimizer = torch.optim.Adam(self.policy.parameters(), self.config.learning_rate, eps=1e-5)
+        self.optimizer = torch.optim.Adam(self.policy.parameters(), self.config.learning_rate, eps=0.0003125)
         self.scheduler = torch.optim.lr_scheduler.LinearLR(self.optimizer, start_factor=1.0, end_factor=0.0,
                                                            total_iters=self.config.running_steps)
         self.gamma = config.gamma

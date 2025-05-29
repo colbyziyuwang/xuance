@@ -24,7 +24,7 @@ class Gym_Env(gym.Wrapper):
         self.action_space = self.env.action_space
         self.metadata = self.env.metadata
         self.reward_range = self.env.reward_range
-        self.max_episode_steps = self.env._max_episode_steps
+        self.max_episode_steps = self.env.spec.max_episode_steps
 
     def render(self, mode):
         return self.env.render()
@@ -108,7 +108,7 @@ class Atari_Env(gym.Wrapper):
                             frameskip=config.frame_skip)
         self.env.action_space.seed(seed=config.env_seed)
         self.env.unwrapped.reset(seed=config.env_seed)
-        self.max_episode_steps = self.env._max_episode_steps
+        self.max_episode_steps = self.env.spec.max_episode_steps
         super(Atari_Env, self).__init__(self.env)
         # self.env.seed(config.env_seed)
         self.num_stack = config.num_stack
@@ -151,11 +151,13 @@ class Atari_Env(gym.Wrapper):
             # Execute NoOp actions
             num_noops = np.random.randint(0, self.noop_max)
             for _ in range(num_noops):
-                obs, _, done, _ = self.env.unwrapped.step(0)
+                obs, _, terminated, truncated, _ = self.env.unwrapped.step(0)
+                done = terminated or truncated
                 if done:
                     self.env.unwrapped.reset()
             # try to fire
-            obs, _, done, _ = self.env.unwrapped.step(1)
+            obs, _, terminated, truncated, _ = self.env.unwrapped.step(0)
+            done = terminated or truncated
             if done:
                 obs = self.env.unwrapped.reset()
             # stack reset observations
@@ -164,7 +166,8 @@ class Atari_Env(gym.Wrapper):
 
             self._episode_step = 0
         else:
-            obs, _, done, _ = self.env.unwrapped.step(0)
+            obs, _, terminated, truncated, _ = self.env.unwrapped.step(0)
+            done = terminated or truncated
             for _ in range(self.num_stack):
                 self.frames.append(self.observation(obs))
 
@@ -173,12 +176,12 @@ class Atari_Env(gym.Wrapper):
         return self._get_obs(), info
 
     def step(self, actions):
-        observation, reward, terminated, info = self.env.unwrapped.step(actions)
+        observation, reward, terminated, truncated, info = self.env.unwrapped.step(actions)
         self.frames.append(self.observation(observation))
         lives = self.env.unwrapped.ale.lives()
         # avoid environment bug
-        if self._episode_step >= self.max_episode_steps:
-            terminated = True
+        # if self._episode_step >= self.max_episode_steps:
+        #     terminated = True
         self.was_real_done = terminated
         if (lives < self.lifes) and (lives > 0):
             terminated = True

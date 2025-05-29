@@ -1,4 +1,4 @@
-agent: "PPO_Clip"  # Choice: PPO_Clip, PPO_KL
+agent: "PPO_KL"  # Choice: PPO_Clip, PPO_KL
 vectorize: "Dummy_Atari"
 env_name: "Atari"
 env_id: "ALE/Breakout-v5"
@@ -10,7 +10,7 @@ frame_skip: 4  # frame skip trick
 noop_max: 30  # Do no-op action for a number of steps in [1, noop_max].
 representation: "AC_CNN_Atari"  # CNN and FC layers
 policy: "Categorical_AC"
-learner: "PPOCLIP_Learner"
+learner: "PPOKL_Learner"
 runner: "DRL"
 
 # Good HyperParameters for Atari Games, Do not change them.
@@ -23,7 +23,7 @@ critic_hidden_size: []
 activation: "relu"
 
 seed: 1
-parallels: 8
+parallels: 16
 running_steps: 10000000  # 10M
 horizon_size: 128  # the horizon size for an environment, buffer_size = horizon_size * parallels.
 n_epochs: 4
